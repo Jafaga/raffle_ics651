@@ -22,8 +22,8 @@ npm test
 
 1. Switch between Machine A and Machine B using the tabs. Keyboard users can use Left/Right arrows or Home/End on the tabs.
 2. Spin as many times as you like. Each machine retains its result and count when switching tabs, including during an animation.
-3. Select **Reveal the methods** whenever you are ready. This reveals the randomized assignment and unlocks bulk trials and exports. You can continue spinning afterward.
-4. Run 8–100,000 trials per machine and export all batches as CSV. The table shows the latest batch. Export session JSON for assignments, timestamps, individual draws, reveal time, and bulk results. Each draw records whether it occurred after reveal.
+3. Select **View my data** whenever you want to see the counts, percentages, and saved history of your individual A/B spins. Keep spinning to update the statistics; bulk runs stay separate. Download your spin history as CSV. Methods remain hidden.
+4. Run 8–100,000 trials per machine and export all batches as CSV. The table shows the latest batch. Export session JSON for timestamps, individual draws, data-view time, and bulk results. Method assignments are redacted. Each draw records whether it occurred after viewing data.
 5. Export before choosing **Start fresh**. Closing or refreshing also clears the session.
 
 There are no surveys, accounts, analytics, or automatic response collection. Everything stays in browser memory until downloaded. No names are collected. Keep exported data out of the repository.
@@ -68,10 +68,10 @@ Bulk trials illustrate sampling variability. Expected count is `N/8` for each ou
 - Both modes use the browser's **same software PRNG**, whose algorithm and seed are browser-controlled. There is no reproducible seed or cryptographic guarantee. Equal probability is the ideal mathematical target, not a hardware-certified claim.
 - No real quantum randomness is generated. This cannot establish that quantum randomness is more fair, unpredictable, or trustworthy than classical randomness.
 - Real hardware would require a separate integration, measurement records, noise/readout-bias characterization, and attention to device access and provenance. Hardware results may not be exactly uniform.
-- A/B assignment is concealed in the ordinary interface until the user chooses to reveal the methods, but static client code and memory are inspectable. This is an informal classroom blind, not secure concealment or a double-blind research system.
+- A/B assignment is concealed in the ordinary interface throughout the interface, but static client code and memory are inspectable. This is an informal classroom blind, not secure concealment or a double-blind research system.
 - Assignment randomization balances labels only in expectation. Participants choose drawing order; order effects, short-run luck, prior beliefs, explanation wording, and small samples may influence answers.
 - Refreshing can restart a session. There is no identity checking, duplicate prevention, server validation, tamper evidence, or central persistence. Use supervised sessions for consistent collection.
-- All session data includes method assignment after export; exports unlock after the methods are revealed. The app does not support real prize drawings or regulated use.
+- Exported files keep method assignments hidden; session export becomes available after a spin or bulk run. The app does not support real prize drawings or regulated use.
 
 ## Files
 
@@ -92,3 +92,7 @@ An original friendly ticket character, bright green buttons, blue reel cabinet, 
 ## Website status
 
 The README badge checks whether the public website responds. Click it to open the app. This is an availability indicator, not a guarantee that every feature works or that the newest commit has deployed. Shields.io and GitHub cache badge images, so a change may take several minutes to appear. Vercel's commit status check on GitHub separately shows deployment progress and success/failure for each commit. Deployment details are available in the [Vercel dashboard](https://vercel.com/justine-afagas-projects/is-this-raffle-fair).
+
+### Individual-spin comparison
+
+View my data shows each outcome's observed share against the ideal 12.5%. Average absolute deviation is the mean of the eight absolute percentage-point differences. Smaller values mean that sample is closer to uniform; this is not a fairness score, significance test, or evidence that one method is superior. Compare sample sizes and expect substantial noise with few spins. Data stays in tab memory until exported.
