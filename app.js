@@ -236,7 +236,7 @@ function renderSpinData() {
     $('spinSummary').textContent = `Your saved spins: A = ${stats.A.n}, B = ${stats.B.n}. Bulk simulations are excluded.`;
     $('spinResults').innerHTML = outcomes.map((o, i) => '<tr><th scope="row">' + o + '</th>' +
         ['A', 'B'].map(m => '<td>' + stats[m].count[i] + '</td><td>' +
-        (stats[m].n ? (stats[m].count[i] / stats[m].n * 100).toFixed(2) + '%' : '—') + '</td>').join('') + '<td>12.5%</td></tr>').join('');
+        (stats[m].n ? (stats[m].count[i] / stats[m].n * 100).toFixed(2) + '%' : '—') + '</td>').join('') + '</tr>').join('');
     $('fairnessSummary').textContent = ['A','B'].map(m => stats[m].n
         ? `Machine ${m}: average distance from 12.5% is ${stats[m].deviation.toFixed(2)} percentage points.`
         : `Machine ${m}: no spins yet.`).join(' ');
