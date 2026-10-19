@@ -85,10 +85,6 @@ Bulk trials illustrate sampling variability. Expected count is `N/8` for each ou
 
 Edit files on GitHub and commit to `main`, or merge a pull request into `main`. Vercel automatically deploys the commit to https://is-this-raffle-fair.vercel.app. Wait for the Vercel commit check to succeed before expecting the change on the live site. If deployment fails, inspect the check's Details link; the previous successful deployment remains live. Do not upload participant exports.
 
-## Design
-
-An original friendly ticket character, bright green buttons, blue reel cabinet, rounded shapes, and responsive layouts. Inspired by approachable learning apps; no Duolingo branding or assets are used. Both machines use identical styling and timing. Reduced-motion preferences are respected.
-
 ## Website status
 
 The README badge checks whether the public website responds. Click it to open the app. This is an availability indicator, not a guarantee that every feature works or that the newest commit has deployed. Shields.io and GitHub cache badge images, so a change may take several minutes to appear. Vercel's commit status check on GitHub separately shows deployment progress and success/failure for each commit. Deployment details are available in the [Vercel dashboard](https://vercel.com/justine-afagas-projects/is-this-raffle-fair).
