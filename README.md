@@ -1,5 +1,7 @@
 # Is This Raffle Fair?
 
+[![Website status](https://img.shields.io/website?url=https%3A%2F%2Fis-this-raffle-fair.vercel.app&label=live%20website&up_message=online&down_message=offline&up_color=brightgreen&down_color=red)](https://is-this-raffle-fair.vercel.app/)
+
 An ICS 651 classroom project about randomness, perceived fairness, and trust. A friendly, colorful browser interface compares two identically styled raffle machines without casino branding, wagering, or prizes. Built with plain HTML, CSS, and JavaScript: no framework, dependencies, accounts, API keys, or build step.
 
 ## Run locally
@@ -86,3 +88,7 @@ Use the existing Vercel project `is-this-raffle-fair`. Deploy the four public ap
 ## Design
 
 An original friendly ticket character, bright green buttons, blue reel cabinet, rounded shapes, and responsive layouts. Inspired by approachable learning apps; no Duolingo branding or assets are used. Both machines use identical styling and timing. Reduced-motion preferences are respected.
+
+## Website status
+
+The README badge checks whether the public website responds. Click it to open the app. This is an availability indicator, not a guarantee that every feature works or that the newest commit has deployed. Shields.io and GitHub cache badge images, so a change may take several minutes to appear. Deployment details are available in the [Vercel dashboard](https://vercel.com/justine-afagas-projects/is-this-raffle-fair).
