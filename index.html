@@ -82,36 +82,36 @@
                     No Winner counts as a result, too.
                 </p>
                 <div class="guide-divider"></div>
-                <h3>What’s behind the spin?</h3>
+                <h3>How are your spins adding up?</h3>
                 <p>
-                    Try A and B first, or peek whenever you’re ready.
+                    Every spin saves its result in this tab. View your data whenever you want, then keep spinning.
                 </p>
-                <button id="showMethods" class="secondary">
-                    Reveal the methods
+                <button id="showData" class="secondary">
+                    View my data
                 </button>
                 <p class="small" id="progress" role="status">
                     A: 0 spins · B: 0 spins
                 </p>
             </aside>
         </div>
-        <!-- Methods Reveal Section -->
-        <section class="panel" id="reveal" hidden>
-            <div class="eyebrow">BEHIND THE DRAW</div>
-            <h2>The methods, revealed.</h2>
-            <p id="mapping"></p>
-            <p>
-                <strong>Classical:</strong>
-                one software pseudorandom value selects an integer from 0 to 7.
 
-                <strong>Simulated quantum:</strong>
-                three independent 50/50 software draws model measuring
-                three qubits after Hadamard gates.
-            </p>
-            <p>
-                Both have ideal odds of 1 in 8 for every outcome.
-                The simulation uses the same software randomness source—it is
-                not a real quantum device or evidence of a quantum advantage.
-            </p>
+        <section class="panel" id="spinData" hidden>
+            <div class="eyebrow">YOUR SPINS, SIDE BY SIDE</div>
+            <h2>What do your results show?</h2>
+            <p id="spinSummary" role="status"></p>
+            <div class="table-wrap"><table>
+                <caption>Individual spins only · No Winner is included as an equal outcome</caption>
+                <thead><tr><th>Outcome</th><th>A count</th><th>A share</th><th>B count</th><th>B share</th><th>Expected share</th></tr></thead>
+                <tbody id="spinResults"></tbody>
+            </table></div>
+            <h3>How close are the results to equal chances?</h3>
+            <p id="fairnessSummary"></p><p id="sampleNote"></p>
+            <p>Distance is the average absolute difference between the eight observed percentages and 12.5%. It describes this sample, not a fairness score or statistical proof.</p>
+            <details><summary>See every saved spin</summary>
+                <div class="table-wrap"><table><thead><tr><th>Spin</th><th>Machine</th><th>Result</th></tr></thead><tbody id="spinHistory"></tbody></table></div>
+            </details>
+            <div class="actions"><button id="keepSpinning">Keep spinning</button><button id="exportSpins" class="secondary" disabled>Download my spins CSV</button></div>
+            <p>Methods stay hidden so you can compare A and B. Both use software randomness; the quantum mode simulates measurements and does not use real quantum hardware.</p>
         </section>
         <!-- Experiment / Bulk Trials Section -->
         <section class="panel" id="lab">

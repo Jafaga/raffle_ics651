@@ -15,7 +15,7 @@ const swap = Math.random() < 0.5;
 
 // Store information about the current raffle session
 const session = {
-    version: 2,
+    version: 3,
     id: crypto.randomUUID(),
     startedAt: new Date().toISOString(),
 
@@ -24,13 +24,13 @@ const session = {
         B: swap ? 'classical' : 'quantum'
     },
     draws: [],
-    revealedAt: null,
+    dataViewedAt: null,
     bulk: []
 };
 
 // Track the current application state
 let busy = false;
-let revealed = false;
+let dataVisible = false;
 
 // Count individual spins for each machine
 const counts = {
@@ -133,7 +133,7 @@ function controls() {
     }
 
     $('reset').disabled = busy;
-    $('showMethods').disabled = busy || revealed;
+    $('showData').disabled = busy;
 }
 
 // ============================================================
@@ -195,7 +195,7 @@ for (const m of ['A', 'B']) {
             index: n,
             outcome: outcomes[n],
             at: new Date().toISOString(),
-            afterReveal: revealed
+            afterDataView: dataVisible
         });
 
         // Display the winning outcome
@@ -210,6 +210,8 @@ for (const m of ['A', 'B']) {
             `A: ${counts.A} ${counts.A === 1 ? 'spin' : 'spins'} · ` +
             `B: ${counts.B} ${counts.B === 1 ? 'spin' : 'spins'}`;
 
+        if (dataVisible) renderSpinData();
+        $('exportSession').disabled = false;
         // Allow another spin
         busy = false;
         controls();
@@ -221,52 +223,49 @@ for (const m of ['A', 'B']) {
 // 6. REVEAL THE RAFFLE METHODS
 // ============================================================
 
-$('showMethods').onclick = () => {
 
-    // Prevent revealing while busy or already revealed
-    if (busy || revealed) return;
-
-    revealed = true;
-
-    // Record when the methods were revealed
-    session.revealedAt = new Date().toISOString();
-
-    // Convert method names into readable labels
-    const label = m =>
-        session.assignment[m] === 'quantum'
-            ? 'Simulated quantum measurement'
-            : 'Classical PRNG';
-
-    // Display the machine-to-method mapping
-    $('mapping').textContent =
-        `Machine A: ${label('A')}. Machine B: ${label('B')}.`;
-
-    // Update each machine's method label
+function renderSpinData() {
+    const stats = {};
     for (const m of ['A', 'B']) {
-        $('method' + m).textContent = label(m);
+        const draws = session.draws.filter(d => d.machine === m);
+        const count = frequencies(draws.map(d => d.index));
+        const n = draws.length;
+        const deviation = n ? count.reduce((sum, c) => sum + Math.abs(c / n * 100 - 12.5), 0) / 8 : null;
+        stats[m] = {count, n, deviation};
     }
-
-    // Show the explanation and experiment sections
-    $('reveal').hidden = false;
-    $('lab').hidden = false;
-
-    // Enable session export
-    $('exportSession').disabled = false;
-
-    // Update the reveal button
-    $('showMethods').textContent = 'Methods revealed';
-
-    controls();
-
-    // Scroll to the explanation
-    $('reveal').scrollIntoView({
-        behavior: reduced ? 'instant' : 'smooth'
-    });
+    $('spinSummary').textContent = `Your saved spins: A = ${stats.A.n}, B = ${stats.B.n}. Bulk simulations are excluded.`;
+    $('spinResults').innerHTML = outcomes.map((o, i) => '<tr><th scope="row">' + o + '</th>' +
+        ['A', 'B'].map(m => '<td>' + stats[m].count[i] + '</td><td>' +
+        (stats[m].n ? (stats[m].count[i] / stats[m].n * 100).toFixed(2) + '%' : '—') + '</td>').join('') + '<td>12.5%</td></tr>').join('');
+    $('fairnessSummary').textContent = ['A','B'].map(m => stats[m].n
+        ? `Machine ${m}: average distance from 12.5% is ${stats[m].deviation.toFixed(2)} percentage points.`
+        : `Machine ${m}: no spins yet.`).join(' ');
+    $('sampleNote').textContent = !stats.A.n || !stats.B.n
+        ? 'Spin both machines to compare them. A dash means no observations, not a zero probability.'
+        : 'A smaller distance means this sample is closer to equal outcome frequencies—not that the machine is proven fairer. Small samples fluctuate a lot; unequal spin totals make this comparison less informative. Both methods target the same 12.5% odds.';
+    $('spinHistory').innerHTML = session.draws.map((d,i) =>
+        `<tr><td>${i+1}</td><td>${d.machine}</td><td>${d.outcome}</td></tr>`).join('');
+    $('exportSpins').disabled = session.draws.length === 0;
+}
+$('showData').onclick = () => {
+    if (busy) return;
+    dataVisible = true;
+    session.dataViewedAt = new Date().toISOString();
+    renderSpinData();
+    $('spinData').hidden = false;
+    $('spinData').scrollIntoView({behavior: reduced ? 'instant' : 'smooth'});
 };
-
-
-// ============================================================
-// 7. FILE DOWNLOAD HELPER
+$('keepSpinning').onclick = () => {
+    const tab = document.querySelector('[role="tab"][aria-selected="true"]');
+    tab.scrollIntoView({behavior: reduced ? 'instant' : 'smooth'});
+    tab.focus();
+};
+$('exportSpins').onclick = () => {
+    const rows = [['spin','machine','outcome','bits','timestamp']];
+    session.draws.forEach((d,i) => rows.push([i+1,d.machine,d.outcome,d.index.toString(2).padStart(3,'0'),d.at]));
+    download('raffle-spins-' + session.id + '.csv', csv(rows), 'text/csv;charset=utf-8');
+};
+// // 7. FILE DOWNLOAD HELPER
 // ============================================================
 
 // Download generated content as a file
@@ -294,7 +293,7 @@ $('exportSession').onclick = () => {
 
     download(
         `raffle-${session.id}.json`,
-        JSON.stringify(session, null, 2),
+        JSON.stringify({...session, assignment: {A: 'hidden', B: 'hidden'}}, null, 2),
         'application/json'
     );
 };
@@ -359,6 +358,7 @@ $('run').onclick = () => {
         `Run ${batch.id}: ${n.toLocaleString()} draws per machine. ` +
         `Expected count per outcome: ${n / 8}.`;
 
+    $('exportSession').disabled = false;
     // Enable exporting trial results
     $('exportTrials').disabled = false;
 };
@@ -394,7 +394,7 @@ $('exportTrials').onclick = () => {
                     batch.id,
                     batch.at,
                     m,
-                    revealed ? session.assignment[m] : 'hidden',
+                    'hidden',
                     i + 1,
                     n.toString(2).padStart(3, '0'),
                     outcomes[n]
