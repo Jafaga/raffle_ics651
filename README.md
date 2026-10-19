@@ -34,7 +34,7 @@ https://is-this-raffle-fair.vercel.app
 
 Source: https://github.com/Jafaga/raffle_ics651
 
-Vercel project: `is-this-raffle-fair`, in Justine Afaga’s projects. The static site is deployed through the connected Vercel integration. GitHub automatic deployments are not configured; changes must be redeployed. `vercel.json` specifies no framework or build step.
+Vercel project: `is-this-raffle-fair`, in Justine Afaga’s projects. The project is connected to this GitHub repository. Commits pushed or merged to `main` automatically trigger production deployments. Other branches receive preview deployments. `vercel.json` specifies no framework or build step.
 
 ## Randomness and outcome mapping
 
@@ -83,7 +83,7 @@ Bulk trials illustrate sampling variability. Expected count is `N/8` for each ou
 
 ## Deployment
 
-Use the existing Vercel project `is-this-raffle-fair`. Deploy the four public app files (`index.html`, `style.css`, `app.js`, `random.js`) with `vercel.json`. Do not upload participant exports. To use the Vercel CLI, sign in, link this folder to the existing project in the correct account, and run `vercel --prod`.
+Edit files on GitHub and commit to `main`, or merge a pull request into `main`. Vercel automatically deploys the commit to https://is-this-raffle-fair.vercel.app. Wait for the Vercel commit check to succeed before expecting the change on the live site. If deployment fails, inspect the check's Details link; the previous successful deployment remains live. Do not upload participant exports.
 
 ## Design
 
@@ -91,4 +91,4 @@ An original friendly ticket character, bright green buttons, blue reel cabinet, 
 
 ## Website status
 
-The README badge checks whether the public website responds. Click it to open the app. This is an availability indicator, not a guarantee that every feature works or that the newest commit has deployed. Shields.io and GitHub cache badge images, so a change may take several minutes to appear. Deployment details are available in the [Vercel dashboard](https://vercel.com/justine-afagas-projects/is-this-raffle-fair).
+The README badge checks whether the public website responds. Click it to open the app. This is an availability indicator, not a guarantee that every feature works or that the newest commit has deployed. Shields.io and GitHub cache badge images, so a change may take several minutes to appear. Vercel's commit status check on GitHub separately shows deployment progress and success/failure for each commit. Deployment details are available in the [Vercel dashboard](https://vercel.com/justine-afagas-projects/is-this-raffle-fair).
