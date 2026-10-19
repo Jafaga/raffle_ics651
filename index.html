@@ -100,8 +100,8 @@
             <h2>What do your results show?</h2>
             <p id="spinSummary" role="status"></p>
             <div class="table-wrap"><table>
-                <caption>Individual spins only · No Winner is included as an equal outcome</caption>
-                <thead><tr><th>Outcome</th><th>A count</th><th>A share</th><th>B count</th><th>B share</th><th>Expected share</th></tr></thead>
+                <caption>Actual win % = player wins ÷ total spins on that machine × 100. The No Winner row shows the no-winner percentage.</caption>
+                <thead><tr><th>Outcome</th><th>A count</th><th>A win %</th><th>B count</th><th>B win %</th></tr></thead>
                 <tbody id="spinResults"></tbody>
             </table></div>
             <h3>How close are the results to equal chances?</h3>
@@ -149,15 +149,15 @@
             <div class="table-wrap">
                 <table>
                     <caption>
-                        Most recent bulk run · expected share: 12.5% per outcome
+                        Most recent bulk run · actual win percentages; No Winner shows the no-winner percentage.
                     </caption>
                     <thead>
                         <tr>
                             <th>Outcome</th>
                             <th>A count</th>
-                            <th>A share</th>
+                            <th>A win %</th>
                             <th>B count</th>
-                            <th>B share</th>
+                            <th>B win %</th>
                         </tr>
                     </thead>
                     <tbody id="results"></tbody>
@@ -186,6 +186,7 @@
                 An educational simulation of fairness and perceived trust.
                 No accounts, tracking, prizes, or real quantum hardware.
             </p>
+            <p class="fine">Created by Justine Afaga · <a href="https://github.com/Jafaga" style="color: inherit; text-underline-offset: 3px;">GitHub @Jafaga</a></p>
         </footer>
 
     </main>
