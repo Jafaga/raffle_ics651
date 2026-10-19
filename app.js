@@ -394,7 +394,7 @@ $('exportTrials').onclick = () => {
                     batch.id,
                     batch.at,
                     m,
-                    session.assignment[m],
+                    revealed ? session.assignment[m] : 'hidden',
                     i + 1,
                     n.toString(2).padStart(3, '0'),
                     outcomes[n]
@@ -433,7 +433,7 @@ $('reset').onclick = () => {
 window.addEventListener('beforeunload', e => {
 
     // Warn the user if the session contains individual spins
-    if (session.draws.length) {
+    if (session.draws.length || session.bulk.length) {
         e.preventDefault();
         e.returnValue = '';
     }
