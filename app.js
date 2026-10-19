@@ -53,9 +53,6 @@ $('machines').innerHTML = ['A', 'B'].map(m => `
     >
         <div class="machine-top">
             <span class="machine-label">MACHINE ${m}</span>
-            <span class="method" id="method${m}">
-                Mystery method
-            </span>
         </div>
         <h2>Lucky Spin</h2>
         <div class="reels" aria-hidden="true">
